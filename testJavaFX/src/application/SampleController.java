@@ -15,7 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-public class SampleController implements Initializable {
+public class SampleController implements Initializable, Cloneable {
 
 	@FXML
 	private Button AddButton, ResetButton, RunButton;// 버튼
@@ -28,37 +28,22 @@ public class SampleController implements Initializable {
 
 	@FXML
 	private TableView<Process> tableView;// 테이블
-
 	@FXML
 	private TableColumn<Process, String> Pnames;
+	@FXML
+	private TableColumn<Process, Integer> ATColumn, BTColumn;
 
 	@FXML
-	private TableColumn<Process, Integer> ATColumn;
-
-	@FXML
-	private TableColumn<Process, Integer> BTColumn;
-
-	@FXML
-	private TableView<Process> tableView2;
+	private TableView<Process> tableView2;// 결과 테이블
 	@FXML
 	private TableColumn<Process, String> nameColumn1;
-
 	@FXML
-	private TableColumn<Process, Integer> ATColumn1;
-
+	private TableColumn<Process, Integer> ATColumn1, BTColumn1, WTColumn1, TTColumn1;
 	@FXML
-	private TableColumn<Process, Integer> BTColumn1;
-
-	@FXML
-	private TableColumn<Process, Integer> WTColumn1;
-
-	@FXML
-	private TableColumn<Process, Integer> TTColumn1;
-
-	@FXML
-	private TableColumn<Process, Integer> NTTColumn1;
+	private TableColumn<Process, Double> NTTColumn1;
 
 	ObservableList<Process> observableList = FXCollections.observableArrayList();
+	ObservableList<Process> obser = FXCollections.observableArrayList();
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -67,7 +52,8 @@ public class SampleController implements Initializable {
 
 		cbox.getItems().addAll("FCFS (First Come First Served)", "RR (Round Robin)", "SPN", "SRTN", "HRRN");// 셀 안에 있는
 																											// 종류
-		cbox.getSelectionModel().select("FCFS (First Come First Served))");// 셀 초기화
+
+		cbox.getSelectionModel().select("FCFS (First Come First Served)");// 셀 초기화
 		tableView.setItems(observableList);
 
 		Label placeholderLabel = new Label("");
@@ -88,6 +74,15 @@ public class SampleController implements Initializable {
 		TTColumn1.setCellValueFactory(cellData -> cellData.getValue().turnaroundTimeProperty().asObject());
 		NTTColumn1.setCellValueFactory(cellData -> cellData.getValue().NormalizedTTProperty().asObject());
 
+		textField4.setDisable(true);
+		cbox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue.equals("RR (Round Robin)")) {
+				textField4.setDisable(false);
+			} else {
+				textField4.setDisable(true);
+			}
+		});
+		
 		AddButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() // 표 데이터 입력
 		{
 			@Override
@@ -98,19 +93,23 @@ public class SampleController implements Initializable {
 				str3 = textField3.getText();// BT
 
 				if (str1 == null || str1.trim().isEmpty()) {
+
 					warning("empty", "Pname");
 					return;
 				} // 프로세스 이름이 입력되지 않을 경우
 
 				if (str2 == null || str3 == null || str2.trim().isEmpty() || str3.trim().isEmpty()) {
+
 					warning("empty", "AT or BT");
 					textField2.clear();
 					textField3.clear();
 					return;
 				} // AT 또는 BT가 비어있을 경우
 
-				if (!isInteger(str2) || !isInteger(str3)) // 타임쿼터스가 숫자가 아닐 경우 또는 오버플로우 언더플로우가 일어날 때
+				if ((!isInteger(str2) && !str2.equalsIgnoreCase("0"))
+						|| (!isInteger(str3) && !str3.equalsIgnoreCase("0"))) // 타임쿼터스가 숫자가 아닐 경우 또는 오버플로우 언더플로우가 일어날 때
 				{
+
 					warning("number", "AT or BT");
 					textField2.clear();
 					textField3.clear();
@@ -118,26 +117,28 @@ public class SampleController implements Initializable {
 				} // AT 또는 BT가 숫자가 아닐 경우;
 
 				if (Integer.parseInt(str2) < 0 || Integer.parseInt(str3) < 0) {
+
 					warning("mnumber", "AT or BT");
 					textField2.clear();
 					textField3.clear();
 					return;
 				}
-				if (!overflows(str2,str3)) {
-					warning("number", "AT or BT");
-					textField2.clear();
-					textField3.clear();
-					return;
+
+				if (observableList.size() <= 15) {
+					tableView.getItems().add(new Process(str1, Integer.parseInt(str2), Integer.parseInt(str3)));
+				} else {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Warning!!");
+					alert.setHeaderText("full");
+					alert.setContentText("table is full.");
 				}
 
-				tableView.getItems().add(new Process(str1, Integer.parseInt(str2), Integer.parseInt(str3)));//
+				//
 
 				textField1.clear();
 				textField2.clear();
 				textField3.clear();
 			}
-
-			
 
 		});
 
@@ -146,6 +147,7 @@ public class SampleController implements Initializable {
 			@Override
 			public void handle(MouseEvent arg0) {
 				observableList.clear();
+				obser.clear();
 			}
 
 		});
@@ -155,7 +157,10 @@ public class SampleController implements Initializable {
 
 			@Override
 			public void handle(MouseEvent arg0) {
+
 				String str = cbox.getValue(); // 체크박스에 있는 값 불러오기
+
+				obser.clear();// obser 초기화
 
 				if (observableList.isEmpty()) // 프로세스 테이블이 비어있을 경우
 				{
@@ -165,7 +170,8 @@ public class SampleController implements Initializable {
 
 				switch (str) {
 				case "FCFS (First Come First Served)":
-
+					FCFS fcs = new FCFS();
+					obser = fcs.run(observableList, observableList.size(), 1);
 					break;
 
 				case "RR (Round Robin)":
@@ -175,13 +181,13 @@ public class SampleController implements Initializable {
 						warning("empty", "TimeQ");
 						textField4.clear();
 						return;
-					} 
+					}
 					if (!isInteger(TimeQ)) // 타임쿼터스가 숫자가 아닐 경우, 또는 오버플로우 언더플로우가 일어날 때
 					{
 						warning("number", "TimeQ");
 						textField4.clear();
 						return;
-					} 
+					}
 					if (Integer.parseInt(TimeQ) < 0) // 음수 일 경우
 					{
 						warning("mnumber", "TimeQ");
@@ -202,7 +208,7 @@ public class SampleController implements Initializable {
 					break;
 				}
 				;
-				tableView2.setItems(observableList);
+				tableView2.setItems(obser);
 			}
 		});
 
@@ -216,17 +222,6 @@ public class SampleController implements Initializable {
 		} catch (NumberFormatException ex) {
 			return false;
 		}
-	}
-	
-	private boolean overflows(String str2, String str3) // AT 와 BT에 대한 합 오버플로우 
-	{
-		if(Integer.parseInt(str2)>Integer.MAX_VALUE-Integer.parseInt(str3)) {
-			return false;
-		}
-		if(Integer.parseInt(str3)>Integer.MIN_VALUE-Integer.parseInt(str2)) {
-			return false;
-		}
-		return true;
 	}
 
 	private void warning(String str, String str1) // 위험 알리는 함수

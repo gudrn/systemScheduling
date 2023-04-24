@@ -26,7 +26,7 @@
                         <Font size="20.0" />
                      </font></RadioButton>
                   <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18;" text="core1" textAlignment="CENTER" wrappingWidth="53.701171875" />
-                  <RadioButton layoutX="33.0" layoutY="72.0" mnemonicParsing="false" text="off" toggleGroup="$group1">
+                  <RadioButton layoutX="33.0" layoutY="72.0" mnemonicParsing="false" selected="true" text="off" toggleGroup="$group1">
                      <font>
                         <Font size="20.0" />
                      </font></RadioButton>
@@ -46,7 +46,7 @@
                      <font>
                         <Font size="20.0" />
                      </font></RadioButton>
-                  <RadioButton layoutX="33.0" layoutY="72.0" mnemonicParsing="false" text="off" toggleGroup="$group2">
+                  <RadioButton layoutX="33.0" layoutY="72.0" mnemonicParsing="false" selected="true" text="off" toggleGroup="$group2">
                      <font>
                         <Font size="20.0" />
                      </font></RadioButton>
@@ -67,7 +67,7 @@
                      <font>
                         <Font size="20.0" />
                      </font></RadioButton>
-                  <RadioButton layoutX="33.0" layoutY="72.0" mnemonicParsing="false" text="off" toggleGroup="$group3">
+                  <RadioButton layoutX="33.0" layoutY="72.0" mnemonicParsing="false" selected="true" text="off" toggleGroup="$group3">
                      <font>
                         <Font size="20.0" />
                      </font></RadioButton>
@@ -88,7 +88,7 @@
                      <font>
                         <Font size="20.0" />
                      </font></RadioButton>
-                  <RadioButton layoutX="33.0" layoutY="72.0" mnemonicParsing="false" text="off" toggleGroup="$group4">
+                  <RadioButton layoutX="33.0" layoutY="72.0" mnemonicParsing="false" selected="true" text="off" toggleGroup="$group4">
                      <font>
                         <Font size="20.0" />
                      </font></RadioButton>
@@ -123,9 +123,9 @@
             <Pane layoutX="322.0" layoutY="143.0" prefHeight="250.0" prefWidth="200.0" style="-fx-background-color: cccccc; -fx-border-color: black;">
                <children>
                   <Text layoutX="23.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="AT:" wrappingWidth="48.083984375" />
-                  <TextField fx:id="textField1" layoutX="20.0" layoutY="51.0" prefHeight="23.0" prefWidth="160.0" />
-                  <TextField fx:id="textField2" layoutX="20.0" layoutY="103.0" prefHeight="23.0" prefWidth="160.0" />
-                  <TextField fx:id="textField3" layoutX="20.0" layoutY="158.0" prefHeight="23.0" prefWidth="160.0" />
+                  <TextField fx:id="textField1" layoutX="20.0" layoutY="51.0" prefHeight="23.0" prefWidth="160.0" promptText="p1" />
+                  <TextField fx:id="textField2" layoutX="20.0" layoutY="103.0" prefHeight="23.0" prefWidth="160.0" promptText="0" />
+                  <TextField fx:id="textField3" layoutX="20.0" layoutY="158.0" prefHeight="23.0" prefWidth="160.0" promptText="0" />
                   <Text layoutX="23.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="BT:" wrappingWidth="48.083984375" />
                   <Text layoutX="23.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Pname:" wrappingWidth="68.083984375" />
                   <Button fx:id="AddButton" layoutX="20.0" layoutY="216.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="76.0" text="입력" />
@@ -133,6 +133,7 @@
                </children>
             </Pane>
             <Text layoutX="877.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18;" text="SO-SO" textAlignment="CENTER" wrappingWidth="236.701171875" />
+            <Pane layoutX="558.0" layoutY="434.0" prefHeight="321.0" prefWidth="619.0" style="-fx-border-color: black;" />
          </children>
       </Pane>
    </top>
