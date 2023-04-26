@@ -2,8 +2,11 @@ package application;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.ResourceBundle;
 
+import core.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -158,20 +161,42 @@ public class SampleController implements Initializable, Cloneable {
 			@Override
 			public void handle(MouseEvent arg0) {
 
-				String str = cbox.getValue(); // 체크박스에 있는 값 불러오기
-
 				obser.clear();// obser 초기화
-
 				if (observableList.isEmpty()) // 프로세스 테이블이 비어있을 경우
 				{
 					warning("empty", "Process Table");
 					return;
 				}
+				for(Process p: observableList)//깊은 복사
+				{
+					obser.add(new Process(p.getProcessName(),p.getArrivalTime(),p.getBurstTime()));
+				}
+				Queue<Process> queue=new LinkedList<>();
+				String str = cbox.getValue(); // 체크박스에 있는 값 불러오기
 
+				Ecore[]E=new Ecore[2];
+				for(int i=0;i<2;i++) {
+					E[i]=new Ecore();
+				}
+				
 				switch (str) {
 				case "FCFS (First Come First Served)":
-					FCFS fcs = new FCFS();
-					obser = fcs.run(observableList, observableList.size(), 1);
+					for(int i=1;i<=50;i++) {
+						for(Process p:obser) {
+							if(p.getArrivalTime()==i-1) {
+								queue.add(p);
+							}
+						}
+						for(int j=0;j<2;j++) {
+							if(!E[j].isVisit()&&!queue.isEmpty()) {
+								E[j].setP(queue.poll());
+								E[j].setVisit(true);
+							}
+						}
+						for(int t=0;t<2;t++) {
+							E[t].FCFS(i);
+						}
+					}
 					break;
 
 				case "RR (Round Robin)":
@@ -206,8 +231,8 @@ public class SampleController implements Initializable, Cloneable {
 				case "HRRN":
 
 					break;
-				}
-				;
+				};
+				
 				tableView2.setItems(obser);
 			}
 		});

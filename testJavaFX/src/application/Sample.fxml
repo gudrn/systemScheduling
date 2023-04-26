@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane prefHeight="800.0" prefWidth="1272.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
-   <top>
+   <bottom>
       <Pane prefHeight="800.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
             <Pane layoutX="544.0" layoutY="143.0" prefHeight="250.0" prefWidth="162.0" style="-fx-border-color: black;">
@@ -133,8 +133,8 @@
                </children>
             </Pane>
             <Text layoutX="877.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 18;" text="SO-SO" textAlignment="CENTER" wrappingWidth="236.701171875" />
-            <Pane layoutX="558.0" layoutY="434.0" prefHeight="321.0" prefWidth="619.0" style="-fx-border-color: black;" />
+            <ScrollPane layoutX="544.0" layoutY="447.0" prefHeight="310.0" prefWidth="673.0" />
          </children>
       </Pane>
-   </top>
+   </bottom>
 </BorderPane>
