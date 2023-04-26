@@ -39,8 +39,6 @@ public class Ecore {
 		Ecore.timeq = timeq;
 	}
 
-	
-	
 	public void FCFS(int Totaltime) {
 		if(this.p==null)
 			return;

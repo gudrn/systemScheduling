@@ -161,7 +161,7 @@ public class SampleController implements Initializable, Cloneable {
 			@Override
 			public void handle(MouseEvent arg0) {
 
-				obser.clear();// obser 초기화
+				obser.clear();//obser 초기화
 				if (observableList.isEmpty()) // 프로세스 테이블이 비어있을 경우
 				{
 					warning("empty", "Process Table");
@@ -181,20 +181,21 @@ public class SampleController implements Initializable, Cloneable {
 				
 				switch (str) {
 				case "FCFS (First Come First Served)":
-					for(int i=1;i<=50;i++) {
+					for(int i=1;i<=50;i++) //실시간 처리형
+					{
 						for(Process p:obser) {
-							if(p.getArrivalTime()==i-1) {
+							if(p.getArrivalTime()==i-1) //현 시간과 Arrivaltime 같을 경우 q에 추가
 								queue.add(p);
-							}
 						}
 						for(int j=0;j<2;j++) {
-							if(!E[j].isVisit()&&!queue.isEmpty()) {
-								E[j].setP(queue.poll());
-								E[j].setVisit(true);
+							if(!E[j].isVisit()&&!queue.isEmpty())//q가 비어있지 않거나 e코어에 process가 없을 경우
+							{
+								E[j].setP(queue.poll());//큐의 front에 잇는 값 pop
+								E[j].setVisit(true);//방문하는 걸로 체크
 							}
 						}
 						for(int t=0;t<2;t++) {
-							E[t].FCFS(i);
+							E[t].FCFS(i);//FCFS 하게함.
 						}
 					}
 					break;
