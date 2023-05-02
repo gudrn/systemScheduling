@@ -39,22 +39,23 @@ public class Ecore {
 		Ecore.timeq = timeq;
 	}
 
-	public void FCFS(int Totaltime) {
+	public Process FCFS(int Totaltime) {
 		if(this.p==null)//process가 없으면 작동 안함
-			return;
+			return null;
 		else if(this.p!=null) {
 			this.TotalTime=Totaltime;
 			this.p.setTimeburstTime(this.p.getTimeburstTime()-excuteTime);
 			if(this.p.getTimeburstTime()==0) {
+				Process k=this.p;
 				this.p.setturnaroundTime(Totaltime-this.p.getArrivalTime());
 				this.p.setWaitingTime(this.p.getturnaroundTime()-this.p.getBurstTime());
 				this.p.setNormalizedTT((double)this.p.getturnaroundTime()/this.p.getBurstTime());
 				this.p=null;
 				this.visit=false;
-				return;
+				return k;
 			}
 		}
-		return;
+		return null;
 	}
 	
 	public Process RR(int Totaltime) {
