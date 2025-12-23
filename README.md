@@ -90,21 +90,3 @@ systemScheduling/
 | 2019136108 | 이해민 | 팀원 |
 | 2019136050 | 박금도 | 팀원 |
 | 2019136047 | 김형구 | 팀원 |
-
-## 주요 클래스 설명
-
-### Process.java
-
-- 프로세스의 도착시간, 서비스시간, 우선순위 등을 저장하는 데이터 모델
-
-### Core.java, Pcore.java, Ecore.java
-
-- CPU 코어의 상태를 관리하고 스케줄링 로직을 처리하는 핵심 클래스
-
-### PrintGanttChart.java
-
-- 스케줄링 결과를 Gantt Chart 형태로 시각화
-
-### Controller.java
-
-- UI 이벤트 처리 및 알고리즘 실행 관리
