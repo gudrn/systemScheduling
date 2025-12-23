@@ -4,6 +4,11 @@
 
 이 프로젝트는 OS에 스케줄링인 FCFS, HRRN, OBG, RR, SPN, SPTN에 대해 어떻게 작동하는지 UI로 확일 할 수 있는 프로그램입니다.
 
+## 기술 스택
+
+- **Java Version**: 17
+- **Javafx**
+
 ## 팀원
 
 | 이름   | 역할 |
